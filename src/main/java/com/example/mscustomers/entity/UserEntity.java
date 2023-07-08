@@ -20,7 +20,7 @@ public class UserEntity {
     @Id
     private Long id;
     private String fullName;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private Gender gender;
     private LocalDate dateOfBirth;
     private String email;

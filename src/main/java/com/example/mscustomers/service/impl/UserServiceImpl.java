@@ -1,6 +1,6 @@
 package com.example.mscustomers.service.impl;
 
-import com.example.mscustomers.dto.mapper.UserMapper;
+import com.example.mscustomers.mapper.UserMapper;
 import com.example.mscustomers.dto.request.UserRequestDto;
 import com.example.mscustomers.dto.response.UserResponseDto;
 import com.example.mscustomers.entity.UserEntity;

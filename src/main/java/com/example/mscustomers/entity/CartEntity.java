@@ -12,6 +12,5 @@ public class CartEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    int quantity;
-
+    int orderQuantity;
 }
