@@ -18,4 +18,5 @@ public class CartItemEntity {
     @JoinColumn(name = "product_id")
     private ProductsEntity product;
 
+
 }
