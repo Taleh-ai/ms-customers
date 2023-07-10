@@ -11,7 +11,7 @@ public class OrderEntity {
     private Long id;
 
     @ManyToOne
-    private UserEntity userEntity;
+    private CustomerEntity userEntity;
 
     // List of Product entities
 

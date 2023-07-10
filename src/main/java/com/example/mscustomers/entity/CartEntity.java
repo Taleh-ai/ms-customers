@@ -10,7 +10,7 @@ public class CartEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private CustomerEntity userEntity;
 
     int quantity;
 

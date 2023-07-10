@@ -10,3 +10,14 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 1234
+
+jwt:
+    secret: "Matrix"
+    get:
+      token:
+        uri: "/authenticate"
+
+    # Swagger-UI custom path
+springdoc:
+    swagger-ui:
+      path: "/swagger-ui.html"
