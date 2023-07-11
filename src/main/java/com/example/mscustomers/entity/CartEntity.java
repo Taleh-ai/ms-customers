@@ -9,8 +9,9 @@ public class CartEntity {
     private Long cartId;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "user_id")
     private CustomerEntity userEntity;
 
-    int orderQuantity;
+    int productQuantity;
 }
