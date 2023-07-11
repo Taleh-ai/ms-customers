@@ -29,8 +29,7 @@ public class CustomerEntity {
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    @MapsId
-    private UserCredentialsEntity userCredentials;
+    @PrimaryKeyJoinColumn    
+private UserCredentialsEntity userCredentials;
 
 }
