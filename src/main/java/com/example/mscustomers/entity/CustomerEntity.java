@@ -32,4 +32,8 @@ public class CustomerEntity {
     @PrimaryKeyJoinColumn    
 private UserCredentialsEntity userCredentials;
 
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @PrimaryKeyJoinColumn    
+    private CartEntity cartEntity;
+
 }
