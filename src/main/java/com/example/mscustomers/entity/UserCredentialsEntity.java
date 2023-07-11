@@ -12,7 +12,8 @@ public class UserCredentialsEntity {
     private Long id;
     String email;
     String password;
-    @OneToOne(mappedBy = "userCredentials", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @MapsId
+    @JoinColumn(name = "user_id")
     private CustomerEntity customer;
 }
