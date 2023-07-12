@@ -1,6 +1,9 @@
 package com.example.mscustomers.controller;
 
 
+import com.example.mscustomers.model.JwtRequest;
+import com.example.mscustomers.repository.CustomerRepository;
+import com.example.mscustomers.securityconfig.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +23,17 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private final AuthenticationManager authenticationManager;
+
+
+	private final JwtTokenUtil jwtTokenUtil;
 
 	private final UserDetailsService jwtInMemoryUserDetailsService;
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final UserRepo userRepo;
+	private final CustomerRepository userRepo;
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String  signIn(@RequestBody JwtRequest request)

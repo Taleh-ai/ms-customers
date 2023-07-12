@@ -1,7 +1,7 @@
 package com.example.mscustomers.service;
 
-import com.example.mscustomers.entity.UserCredentialsEntity;
-import com.example.mscustomers.repository.UserCredentialsRepository;
+import com.example.mscustomers.entity.CustomerEntity;
+import com.example.mscustomers.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +14,11 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
-    private final UserCredentialsRepository repository;
+    private final CustomerRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserCredentialsEntity user = repository.findUserCredentialsEntitiesByEmail(username);
+        CustomerEntity user = repository.findCustomerEntitiesByEmail(username);
 
         if (user != null) {
             return new User(user.getEmail(), user.getPassword(),

@@ -1,12 +1,16 @@
 package com.example.mscustomers.entity;
 
 import com.example.mscustomers.dto.enumeration.Gender;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -24,16 +28,20 @@ public class CustomerEntity {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private LocalDate birthDate;
+
+    @NotBlank
     private String email;
+
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @PrimaryKeyJoinColumn    
-private UserCredentialsEntity userCredentials;
+    @CreationTimestamp
+    private Date creation_date;
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @PrimaryKeyJoinColumn    
+    @UpdateTimestamp
+    private Date update_date;
+
+    String password;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private CartEntity cartEntity;
 
 }

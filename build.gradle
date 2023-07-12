@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.1'
+    id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.1.0'
 }
 
@@ -37,8 +37,7 @@ dependencies {
     //implementation 'org.liquibase:liquibase-core:+'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
-    implementation 'org.apache.httpcomponents:httpclient:<version>'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools:<version>'
+    compileOnly 'org.apache.httpcomponents:httpclient:4.5.14'
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
 }
