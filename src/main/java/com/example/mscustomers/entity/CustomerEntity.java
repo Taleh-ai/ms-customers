@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -41,7 +42,9 @@ public class CustomerEntity {
     private Date update_date;
 
     String password;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private CartEntity cartEntity;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartEntity> cartEntity;
+
+    private  String role;
 
 }

@@ -1,6 +1,5 @@
 package com.example.mscustomers.controller;
 
-import com.example.mscustomers.dto.response.UserResponseDto;
 import com.example.mscustomers.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,6 @@
 package com.example.mscustomers.service.impl;
 
 import com.example.mscustomers.dto.request.CustomerRequestDto;
-import com.example.mscustomers.dto.response.UserResponseDto;
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.exception.ResourceNotFoundException;
 import com.example.mscustomers.repository.UserCredentialsRepository;

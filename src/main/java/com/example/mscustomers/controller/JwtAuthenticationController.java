@@ -1,11 +1,11 @@
 package com.example.mscustomers.controller;
 
 
+import com.example.mscustomers.dto.response.AfterSignInResponseDto;
 import com.example.mscustomers.model.JwtRequest;
 import com.example.mscustomers.repository.CustomerRepository;
 import com.example.mscustomers.securityconfig.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
