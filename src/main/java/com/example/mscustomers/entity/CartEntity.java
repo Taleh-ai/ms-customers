@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "carts")
 public class CartEntity {
     @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,6 @@ public class CartEntity {
     private CustomerEntity userEntity;
     @Column(name = "product_id")
     private String productId;
-
     @Column(name = "product_quantity")
     int productQuantity;
     @Column(name = "total_price")
