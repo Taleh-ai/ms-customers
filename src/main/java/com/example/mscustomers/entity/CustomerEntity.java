@@ -33,19 +33,24 @@ public class CustomerEntity {
     @NotBlank
     private String email;
 
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @CreationTimestamp
-    private Date creation_date;
+    @Column(name = "creation_date")
+    private Date creationDate;
 
     @UpdateTimestamp
-    private Date update_date;
+    @Column(name = "update_date")
+    private Date updateDate;
 
     String password;
     
     private  String role;
+    
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartEntity> cartEntity;
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderEntity> ordersEntity;
 
