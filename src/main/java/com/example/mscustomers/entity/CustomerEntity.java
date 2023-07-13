@@ -42,9 +42,11 @@ public class CustomerEntity {
     private Date update_date;
 
     String password;
+    
+    private  String role;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartEntity> cartEntity;
-
-    private  String role;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderEntity> ordersEntity;
 
 }
