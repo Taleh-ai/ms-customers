@@ -1,15 +1,12 @@
 package com.example.mscustomers.entity;
 
 import com.example.mscustomers.dto.enumeration.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CustomerEntity {
 
     @Id
@@ -53,5 +51,6 @@ public class CustomerEntity {
     
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderEntity> ordersEntity;
+
 
 }

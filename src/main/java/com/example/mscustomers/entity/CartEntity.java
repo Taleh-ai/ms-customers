@@ -2,6 +2,7 @@ package com.example.mscustomers.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "carts")
+@Builder
 public class CartEntity {
     @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)

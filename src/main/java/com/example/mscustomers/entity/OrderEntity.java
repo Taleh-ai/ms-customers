@@ -1,7 +1,9 @@
 package com.example.mscustomers.entity;
 
-import jakarta.persistence.*;
 
+import com.example.mscustomers.dto.enumeration.OrderStatus;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -33,5 +35,5 @@ public class OrderEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
-    private OrderStatus  status;
+    private OrderStatus status;
 }

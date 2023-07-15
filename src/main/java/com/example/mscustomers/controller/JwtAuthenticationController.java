@@ -1,7 +1,10 @@
 package com.example.mscustomers.controller;
 
 
+import com.example.mscustomers.dto.mapper.CustomerMapper;
+import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.AfterSignInResponseDto;
+import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.model.JwtRequest;
 import com.example.mscustomers.repository.CustomerRepository;
 import com.example.mscustomers.securityconfig.JwtTokenUtil;
@@ -33,8 +36,8 @@ public class JwtAuthenticationController {
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final CustomerRepository userRepo;
-
+	private final CustomerRepository customerRepo;
+	private final CustomerMapper mapper;
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String  signIn(@RequestBody JwtRequest request)
 			throws Exception {
@@ -55,16 +58,12 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity<?> signUp (@RequestBody SignUpDto dto){
+	public ResponseEntity<?> signUp (@RequestBody CustomerRequestDto dto){
 
-		UserEntity entity = userRepo.findUsersEntityByEmail(dto.getEmail());
+		CustomerEntity entity = customerRepo.findCustomerEntitiesByEmail(dto.getEmail());
 		if (entity == null) {
-			UserEntity userEntity = UserEntity.builder()
-					.email(dto.getEmail())
-					.password(passwordEncoder.encode(dto.getPassword()))
-					.role(dto.getRole())
-					.build();
-			userRepo.save(userEntity);
+			CustomerEntity userEntity = mapper.fromDto(dto);
+			customerRepo.save(userEntity);
 			return ResponseEntity.ok("You signed!");
 		}else
 			return ResponseEntity.ok("This account already exist in our DB!");
