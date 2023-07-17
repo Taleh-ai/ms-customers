@@ -4,6 +4,7 @@ package com.example.mscustomers.controller;
 import com.example.mscustomers.dto.mapper.CustomerMapper;
 import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.AfterSignInResponseDto;
+import com.example.mscustomers.email.MailService;
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.model.JwtRequest;
 import com.example.mscustomers.repository.CustomerRepository;
@@ -19,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Objects;
 
 @RestController
@@ -31,6 +34,7 @@ public class JwtAuthenticationController {
 
 
 	private final JwtTokenUtil jwtTokenUtil;
+	private final MailService mailService;
 
 	private final UserDetailsService jwtInMemoryUserDetailsService;
 
@@ -58,13 +62,14 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity<?> signUp (@RequestBody CustomerRequestDto dto){
+	public ResponseEntity<?> signUp (@RequestBody CustomerRequestDto dto) throws MessagingException, IOException {
 
 		CustomerEntity entity = customerRepo.findCustomerEntitiesByEmail(dto.getEmail());
 		if (entity == null) {
 			CustomerEntity userEntity = mapper.fromDto(dto);
 			customerRepo.save(userEntity);
 			return ResponseEntity.ok("You signed!");
+			mailService.mailSender(dto.getEmail());
 		}else
 			return ResponseEntity.ok("This account already exist in our DB!");
 

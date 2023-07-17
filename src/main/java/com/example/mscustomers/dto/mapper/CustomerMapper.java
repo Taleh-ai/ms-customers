@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CustomerMapper {
     private final PasswordEncoder passwordEncoder;
+
     public CustomerEntity fromDto(CustomerRequestDto dto){
        return CustomerEntity.builder()
                 .firstName(dto.getFirstName())
