@@ -34,12 +34,14 @@ public class JwtAuthenticationController {
 
 
 	private final JwtTokenUtil jwtTokenUtil;
-	private final UserDetailsService jwtInMemoryUserDetailsService;
-	private final PasswordEncoder passwordEncoder;
-	private final CustomerRepository customerRepo;
-	private final CustomerMapper mapper;
 	private final MailService mailService;
 
+	private final UserDetailsService jwtInMemoryUserDetailsService;
+
+	private final PasswordEncoder passwordEncoder;
+
+	private final CustomerRepository customerRepo;
+	private final CustomerMapper mapper;
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String  signIn(@RequestBody JwtRequest request)
 			throws Exception {
@@ -68,6 +70,7 @@ public class JwtAuthenticationController {
 			customerRepo.save(userEntity);
 			mailService.mailSender(dto.getEmail());
 			return ResponseEntity.ok("You signed!");
+
 		}else
 			return ResponseEntity.ok("This account already exist in our DB!");
 
