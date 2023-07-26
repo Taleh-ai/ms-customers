@@ -10,7 +10,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 1234
-    mail:
+  mail:
       host: smtp-relay.brevo.com
       port: 587
       username: talehrzayev000@gmail.com
