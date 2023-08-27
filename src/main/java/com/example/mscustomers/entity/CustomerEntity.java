@@ -49,9 +49,5 @@ public class CustomerEntity {
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartEntity> cartEntity;
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderEntity> ordersEntity;
-
 
 }

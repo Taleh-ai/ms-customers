@@ -1,6 +1,7 @@
 package com.example.mscustomers.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,15 +17,17 @@ import javax.persistence.*;
 @Builder
 public class CartEntity {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id")
     private Long cartId;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private CustomerEntity userEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
+    private CustomerEntity customerEntity;
     @Column(name = "product_id")
-    private String productId;
+    private Long productId;
     @Column(name = "product_quantity")
-    int productQuantity;
+    private int productQuantity;
     @Column(name = "total_price")
-    int totalPrice;
+    private double totalPrice;
 }

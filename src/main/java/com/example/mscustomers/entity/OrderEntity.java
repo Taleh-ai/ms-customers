@@ -36,4 +36,7 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus status;
+
+    @Column(name = "shipping_adress_id")
+    private Long shipping_adress_id;
 }

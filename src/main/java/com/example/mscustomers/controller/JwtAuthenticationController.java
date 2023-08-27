@@ -26,6 +26,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin
+@RequestMapping("v1/")
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
