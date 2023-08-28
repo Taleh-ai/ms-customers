@@ -18,7 +18,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CustomerEntity user = repository.findCustomerEntitiesByEmail(username);
+        CustomerEntity user = repository.findCustomerEntityByEmail(username);
 
         if (user != null) {
             return new User(user.getEmail(), user.getPassword(),

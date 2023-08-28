@@ -26,7 +26,6 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin
-@RequestMapping("v1/")
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
@@ -43,7 +42,7 @@ public class JwtAuthenticationController {
 
 	private final CustomerRepository customerRepo;
 	private final CustomerMapper mapper;
-	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	@RequestMapping(value = "v1//signin", method = RequestMethod.POST)
 	public String  signIn(@RequestBody JwtRequest request)
 			throws Exception {
 
@@ -62,10 +61,10 @@ public class JwtAuthenticationController {
 		return  signInResponseDto.toString();
 	}
 
-	@RequestMapping(value = "/signup",method = RequestMethod.POST)
+	@RequestMapping(value = "v1//signup",method = RequestMethod.POST)
 	public ResponseEntity<?> signUp (@RequestBody CustomerRequestDto dto) throws MessagingException, IOException {
 
-		CustomerEntity entity = customerRepo.findCustomerEntitiesByEmail(dto.getEmail());
+		CustomerEntity entity = customerRepo.findCustomerEntityByEmail(dto.getEmail());
 		if (entity == null) {
 			CustomerEntity userEntity = mapper.fromDto(dto);
 			customerRepo.save(userEntity);

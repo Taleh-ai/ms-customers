@@ -41,5 +41,4 @@ public class CustomerRequestDto {
         @ValidPassword
         private String password;
 
-        private  String role;
 }

@@ -22,7 +22,7 @@ public class CustomerMapper {
                 .phoneNumber(dto.getPhone())
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role("Customer")
+                .role("CUSTOMER")
                 .build();
     }
 

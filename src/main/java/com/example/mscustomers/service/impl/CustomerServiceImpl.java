@@ -26,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponseDto getCustomerInfo(String  email) {
 
-        CustomerEntity entity = repository.findCustomerEntitiesByEmail(email);
+        CustomerEntity entity = repository.findCustomerEntityByEmail(email);
         return  mapper.toDto(entity);
     }
 

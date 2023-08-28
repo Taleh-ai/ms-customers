@@ -36,7 +36,7 @@ public class ShippingAdressController {
     }
 
     @GetMapping ("shipping{id}")
-    public  ResponseEntity<SuccessDetails<ShippingAdressResponseDto>>  getUserAdresses(@PathVariable Long id){
+    public  ResponseEntity<SuccessDetails<ShippingAdressResponseDto>>  getUserAdress(@PathVariable Long id){
         return ResponseEntity.ok(new SuccessDetails<>(shippingAdressService.getUserAdress(id), HttpStatus.OK.value(),true));
     }
 }
