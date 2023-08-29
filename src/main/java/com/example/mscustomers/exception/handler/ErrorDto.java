@@ -1,4 +1,4 @@
-package com.example.mscustomers.handler;
+package com.example.mscustomers.exception.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

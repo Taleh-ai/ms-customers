@@ -2,7 +2,7 @@ package com.example.mscustomers.controller;
 
 import com.example.mscustomers.dto.request.ShippingAdressRequestDto;
 import com.example.mscustomers.dto.response.ShippingAdressResponseDto;
-import com.example.mscustomers.handler.SuccessDetails;
+import com.example.mscustomers.exception.handler.SuccessDetails;
 import com.example.mscustomers.service.impl.ShippingAdressServiceImpl;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;

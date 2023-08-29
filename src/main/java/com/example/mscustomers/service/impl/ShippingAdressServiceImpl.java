@@ -34,9 +34,6 @@ public class ShippingAdressServiceImpl implements ShippingAdressService {
         }else{
             return null;
         }
-
-
-
     }
 
     @Override
