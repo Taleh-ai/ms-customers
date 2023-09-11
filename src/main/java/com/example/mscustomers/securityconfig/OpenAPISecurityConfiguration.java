@@ -1,4 +1,4 @@
-package com.example.mscustomers.config;
+package com.example.mscustomers.securityconfig;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;

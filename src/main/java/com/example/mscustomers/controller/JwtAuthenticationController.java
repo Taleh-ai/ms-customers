@@ -1,12 +1,12 @@
 package com.example.mscustomers.controller;
 
 
-import com.example.mscustomers.dto.mapper.CustomerMapper;
+import com.example.mscustomers.mapper.CustomerMapper;
 import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.AfterSignInResponseDto;
-import com.example.mscustomers.email.MailService;
+import com.example.mscustomers.service.impl.MailService;
 import com.example.mscustomers.entity.CustomerEntity;
-import com.example.mscustomers.model.JwtRequest;
+import com.example.mscustomers.dto.request.JwtRequest;
 import com.example.mscustomers.repository.CustomerRepository;
 import com.example.mscustomers.securityconfig.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;

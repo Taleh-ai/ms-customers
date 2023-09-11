@@ -13,6 +13,5 @@ public class CartResponseDto {
    private Long id;
    private int productQuantity;
    private double totalPrice;
-  // private ProductResponseDto productResponseDto;
-
+   private Long productId;
 }

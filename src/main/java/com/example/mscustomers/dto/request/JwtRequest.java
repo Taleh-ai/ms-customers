@@ -1,4 +1,4 @@
-package com.example.mscustomers.model;
+package com.example.mscustomers.dto.request;
 
 import java.io.Serializable;
 

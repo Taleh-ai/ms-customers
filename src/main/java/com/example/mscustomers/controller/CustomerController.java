@@ -8,24 +8,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("v1/")
+@RequestMapping("v1/customer")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "Bearer Authentication")
 public class CustomerController {
     private final CustomerService service;
 
-    @GetMapping("customer/{email}")
-    public CustomerResponseDto getcustomer(@PathVariable("email")  String  email){
-       return  service.getCustomerInfo(email);
+    @GetMapping
+    public CustomerResponseDto getcustomer(){
+       return  service.getCustomerInfo();
     }
 
-    @DeleteMapping("customer")
-    public void deleteCustomer(Long id){
-          service.deleteUser(id);
+    @DeleteMapping
+    public void deleteCustomer(){
+          service.deleteUser();
     }
 
-    @PutMapping("customer/{email}")
-    public void updateUser(@PathVariable("email") Long id,@RequestBody CustomerRequestDto customerRequestDto){
-        service.updateCustomerInfo(id,customerRequestDto);
+    @PutMapping
+    public void updateUser(@RequestBody CustomerRequestDto customerRequestDto){
+        service.updateCustomerInfo(customerRequestDto);
     }
 }

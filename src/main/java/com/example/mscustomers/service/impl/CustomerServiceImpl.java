@@ -1,21 +1,17 @@
 package com.example.mscustomers.service.impl;
 
-import com.example.mscustomers.dto.mapper.CustomerMapper;
+import com.example.mscustomers.mapper.CustomerMapper;
 import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.CustomerResponseDto;
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.repository.CustomerRepository;
-import com.example.mscustomers.securityconfig.JwtRequestFilter;
 import com.example.mscustomers.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,21 +20,32 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper mapper;
     private final PasswordEncoder passwordEncoder;
     @Override
-    public CustomerResponseDto getCustomerInfo(String  email) {
-
-        CustomerEntity entity = repository.findCustomerEntityByEmail(email);
-        return  mapper.toDto(entity);
+    public CustomerResponseDto getCustomerInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            return  mapper.toDto(customerEntity);
+        }
+        return null;
     }
 
     @Override
-    public void deleteUser(Long id ) {
-    repository.deleteById(id);
+    public void deleteUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            repository.deleteById(customerEntity.getId());
+        }
     }
 
     @Override
-    public void updateCustomerInfo(Long id , CustomerRequestDto customerRequestDto) {
-        CustomerEntity customerEntity = repository.getById(id);
-
+    public void updateCustomerInfo(CustomerRequestDto customerRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            CustomerEntity customerEntity = (CustomerEntity) userDetails;
         customerEntity.setEmail(customerRequestDto.getEmail());
         customerEntity.setGender(customerRequestDto.getGender());
         customerEntity.setFirstName(customerRequestDto.getFirstName());
@@ -47,6 +54,5 @@ public class CustomerServiceImpl implements CustomerService {
         customerEntity.setPhoneNumber(customerRequestDto.getPhone());
         repository.save(customerEntity);
     }
-
-
+}
 }

@@ -7,7 +7,7 @@ import com.example.mscustomers.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface CartService {
-    public void createCart(CartRequestDto cartRequestDto);
+    public void createCart(CartRequestDto cartRequestDto) throws ResourceNotFoundException;
     public List<CartResponseDto> viewAllCart();
 
     public void deleteCart(Long id) throws ResourceNotFoundException;

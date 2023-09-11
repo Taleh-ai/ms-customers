@@ -26,9 +26,9 @@ private final CartServiceImpl cartService;
     }
 
     @PostMapping
-    public ResponseEntity<SuccessDetails<String>> addCart( @RequestBody CartRequestDto cartRequestDto){
+    public ResponseEntity<SuccessDetails<String>> addCart( @RequestBody CartRequestDto cartRequestDto) throws ResourceNotFoundException {
         cartService.createCart(cartRequestDto);
-        return ResponseEntity.ok(new SuccessDetails<>("Product added to Cart updated Successfully!", HttpStatus.OK.value(),true));
+        return ResponseEntity.ok(new SuccessDetails<>("Product added to Cart  Successfully!", HttpStatus.OK.value(),true));
     }
 
     @GetMapping

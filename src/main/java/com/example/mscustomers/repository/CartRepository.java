@@ -11,4 +11,7 @@ import java.util.List;
 public interface CartRepository  extends JpaRepository<CartEntity,Long> {
 
     List<CartEntity> getCartEntitiesByCustomerEntity(CustomerEntity customerEntity);
+    List<CartEntity> getCartEntitiesByCartIdIn(List<Long> id);
+
+    void deleteCartEntitiesByCartIdIn(List<Long> ids);
 }

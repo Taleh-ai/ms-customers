@@ -1,9 +1,8 @@
-package com.example.mscustomers.dto.mapper;
+package com.example.mscustomers.mapper;
 
 import com.example.mscustomers.dto.request.ShippingAdressRequestDto;
 import com.example.mscustomers.dto.response.ShippingAdressResponseDto;
-import com.example.mscustomers.entity.ShippingAdressEntity;
-import com.example.mscustomers.repository.CustomerRepository;
+import com.example.mscustomers.entity.ShippingAddressEntity;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -17,21 +16,21 @@ public class ShippingAdressMapper {
 
 
 
-    public ShippingAdressEntity fromDto(ShippingAdressRequestDto dto){
-        ShippingAdressEntity entity = new ShippingAdressEntity();
+    public ShippingAddressEntity fromDto(ShippingAdressRequestDto dto){
+        ShippingAddressEntity entity = new ShippingAddressEntity();
         entity.setCity(dto.getCity());
-        entity.setAdressPurpose(dto.getAdressPurpose());
+        entity.setAddressPurpose(dto.getAdressPurpose());
         entity.setCountry(dto.getCountry());
         entity.setStreet(dto.getStreet());
         entity.setHomeNo(dto.getHomeNo());
         return entity;
     }
 
-    public ShippingAdressResponseDto toDto(ShippingAdressEntity entity){
+    public ShippingAdressResponseDto toDto(ShippingAddressEntity entity){
         ShippingAdressResponseDto dto = new ShippingAdressResponseDto();
         dto.setAddressId(entity.getAddressId());
         dto.setCity(entity.getCity());
-        dto.setAdressPurpose(entity.getAdressPurpose());
+        dto.setAdressPurpose(entity.getAddressPurpose());
         dto.setCountry(entity.getCountry());
         dto.setStreet(dto.getStreet());
         dto.setCustomerId(entity.getCustomerEntity().getId());
@@ -39,8 +38,8 @@ public class ShippingAdressMapper {
         return dto;
     }
 
-    public List<ShippingAdressResponseDto> toDtoList(List<ShippingAdressEntity> shippingAdressEntityList){
+    public List<ShippingAdressResponseDto> toDtoList(List<ShippingAddressEntity> shippingAddressEntityList){
         ShippingAdressMapper shippingAdressMapper = new ShippingAdressMapper();
-       return shippingAdressEntityList.stream().map(n->shippingAdressMapper.toDto(n)).collect(Collectors.toList());
+       return shippingAddressEntityList.stream().map(n->shippingAdressMapper.toDto(n)).collect(Collectors.toList());
     }
 }

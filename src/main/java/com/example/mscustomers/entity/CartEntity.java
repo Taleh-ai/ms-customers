@@ -20,14 +20,15 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long cartId;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private CustomerEntity customerEntity;
+
     @Column(name = "product_id")
     private Long productId;
+
     @Column(name = "product_quantity")
     private int productQuantity;
-    @Column(name = "total_price")
-    private double totalPrice;
 }

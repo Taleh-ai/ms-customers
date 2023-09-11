@@ -1,4 +1,4 @@
-package com.example.mscustomers.service;
+package com.example.mscustomers.service.impl;
 
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.repository.CustomerRepository;

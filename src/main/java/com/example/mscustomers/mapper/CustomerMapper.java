@@ -1,4 +1,4 @@
-package com.example.mscustomers.dto.mapper;
+package com.example.mscustomers.mapper;
 
 import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.CustomerResponseDto;
