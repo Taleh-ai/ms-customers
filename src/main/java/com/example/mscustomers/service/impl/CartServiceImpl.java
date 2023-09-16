@@ -10,6 +10,7 @@ import com.example.mscustomers.entity.CartEntity;
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.exception.ResourceNotFoundException;
 import com.example.mscustomers.repository.CartRepository;
+import com.example.mscustomers.repository.CustomerRepository;
 import com.example.mscustomers.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
+    private final CustomerRepository customerRepository;
     private final ProductServiceClient productServiceClient;
 
     @Override
@@ -39,7 +41,7 @@ public class CartServiceImpl implements CartService {
             if (!"No stock".equals(productDto.getStockSituation())) {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                CustomerEntity customerEntity = (CustomerEntity) userDetails;
+                CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
                 CartEntity cartEntity = cartMapper.fromDto(cartRequestDto);
                 cartEntity.setCustomerEntity(customerEntity);
                 cartRepository.save(cartEntity);
@@ -55,7 +57,7 @@ public class CartServiceImpl implements CartService {
     public List<CartResponseDto> viewAllCart() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        CustomerEntity customerEntity = (CustomerEntity) userDetails;
+        CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
         List<CartEntity> cartEntities = cartRepository.getCartEntitiesByCustomerEntity(customerEntity);
         List<CartResponseDto> cartResponseDtoList = cartMapper.toDtoList(cartEntities);
 

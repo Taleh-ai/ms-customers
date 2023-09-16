@@ -35,5 +35,10 @@ private final CartServiceImpl cartService;
     public ResponseEntity<SuccessDetails<List<CartResponseDto>>> viewCart(){
         return ResponseEntity.ok(new SuccessDetails<>(cartService.viewAllCart(), HttpStatus.OK.value(),true));
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<SuccessDetails<String>> deleteCart(@PathVariable(name = "id") Long id) throws ResourceNotFoundException {
+        cartService.deleteCart(id);
+        return ResponseEntity.ok(new SuccessDetails<>("Cart deleted Successfully!", HttpStatus.OK.value(),true));
+    }
 
 }

@@ -5,6 +5,7 @@ import com.example.mscustomers.dto.request.ShippingAdressRequestDto;
 import com.example.mscustomers.dto.response.ShippingAdressResponseDto;
 import com.example.mscustomers.entity.CustomerEntity;
 import com.example.mscustomers.entity.ShippingAddressEntity;
+import com.example.mscustomers.repository.CustomerRepository;
 import com.example.mscustomers.repository.ShippinAdressRepository;
 import com.example.mscustomers.service.ShippingAdressService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ import java.util.List;
 public class ShippingAdressServiceImpl implements ShippingAdressService {
     private final ShippinAdressRepository shippinAdressRepository;
     private final ShippingAdressMapper shippingAdressMapper;
+    private final CustomerRepository customerRepository;
+
     @Override
     public List<ShippingAdressResponseDto> getUserAdresses() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
             return shippingAdressMapper.toDtoList(shippinAdressRepository.findAllByCustomerEntity(customerEntity) );
         }else{
             return null;
@@ -38,8 +41,8 @@ public class ShippingAdressServiceImpl implements ShippingAdressService {
 
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customer = (CustomerEntity) userDetails;
-            return shippingAdressMapper.toDto((ShippingAddressEntity) shippinAdressRepository.findAllByCustomerEntity(customer).stream().filter(n->n.getAddressId() ==id));
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
+            return shippingAdressMapper.toDto((ShippingAddressEntity) shippinAdressRepository.findAllByCustomerEntity(customerEntity).stream().filter(n->n.getAddressId() ==id));
 
         }else{
             return null;
@@ -63,9 +66,9 @@ public class ShippingAdressServiceImpl implements ShippingAdressService {
 
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customer = (CustomerEntity) userDetails;
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
             ShippingAddressEntity shippingAddressEntity = shippingAdressMapper.fromDto(shippingAdressRequestDto);
-            shippingAddressEntity.setCustomerEntity(customer);
+            shippingAddressEntity.setCustomerEntity(customerEntity);
             shippinAdressRepository.save(shippingAddressEntity);
         }
     }

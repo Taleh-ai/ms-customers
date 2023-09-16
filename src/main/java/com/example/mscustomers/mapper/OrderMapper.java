@@ -24,6 +24,7 @@ public class OrderMapper {
     private final CartRepository cartRepository;
     private final ShippinAdressRepository shippinAdressRepository;
     private final ProductServiceClient productServiceClient;
+    private final ShippingAdressMapper shippingAdressMapper;
     public List<OrderEntity> fromDtoList(OrderRequestDto orderRequestDto){
         List<CartEntity> cartEntityList = cartRepository.getCartEntitiesByCartIdIn(orderRequestDto.getCardId());
         List<OrderEntity> orderEntityList = cartEntityList.stream().map(n-> OrderEntity.builder()
@@ -48,7 +49,7 @@ public class OrderMapper {
                 .deliveredDate(orderEntity.getDeliveredDate())
                 .fullName(orderEntity.getCustomerEntity().getFirstName() + " " +orderEntity.getCustomerEntity().getLastName())
                 .shippingDate(orderEntity.getShippingDate())
-                .shippingAddressEntity(orderEntity.getShippingAddress())
+                .shippingAdressResponseDto(shippingAdressMapper.toDto(orderEntity.getShippingAddress()))
                 .quantity(orderEntity.getQuantity())
                 .totalPrice(orderEntity.getTotalPrice())
                 .build();

@@ -21,5 +21,5 @@ public class OrderResponseDto {
     private LocalDate shippingDate;
     private ProductResponseDto productResponseDto;
     private OrderStatus orderStatus;
-    private ShippingAddressEntity shippingAddressEntity;
+    private ShippingAdressResponseDto shippingAdressResponseDto;
 }

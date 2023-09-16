@@ -19,12 +19,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
     private final CustomerMapper mapper;
     private final PasswordEncoder passwordEncoder;
+    private final CustomerRepository customerRepository;
+
     @Override
     public CustomerResponseDto getCustomerInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
             return  mapper.toDto(customerEntity);
         }
         return null;
@@ -35,7 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
+            if (userDetails != null) {
+                SecurityContextHolder.getContext().setAuthentication(null);
+            }
             repository.deleteById(customerEntity.getId());
         }
     }
@@ -45,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerEntity customerEntity = (CustomerEntity) userDetails;
+            CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
         customerEntity.setEmail(customerRequestDto.getEmail());
         customerEntity.setGender(customerRequestDto.getGender());
         customerEntity.setFirstName(customerRequestDto.getFirstName());

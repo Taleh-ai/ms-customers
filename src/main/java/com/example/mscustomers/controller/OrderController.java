@@ -1,9 +1,11 @@
 package com.example.mscustomers.controller;
 
+import com.example.mscustomers.dto.enumeration.OrderStatus;
 import com.example.mscustomers.dto.request.CartRequestDto;
 import com.example.mscustomers.dto.request.OrderRequestDto;
 import com.example.mscustomers.dto.response.CartResponseDto;
 import com.example.mscustomers.dto.response.OrderResponseDto;
+import com.example.mscustomers.exception.MethodArgumentNotValidException;
 import com.example.mscustomers.exception.ResourceNotFoundException;
 import com.example.mscustomers.exception.handler.SuccessDetails;
 import com.example.mscustomers.service.impl.OrderServiceImpl;
@@ -42,5 +44,11 @@ public class OrderController {
     @GetMapping("{id}")
     public ResponseEntity<SuccessDetails<OrderResponseDto>> getOrder(@PathVariable(name = "id") Long id ) throws ResourceNotFoundException {
         return ResponseEntity.ok(new SuccessDetails<>(orderService.getOrderById(id), HttpStatus.OK.value(),true));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<SuccessDetails<String>> updateOrder(@PathVariable(name = "id") Long id,@RequestParam OrderStatus orderStatus) throws ResourceNotFoundException, MethodArgumentNotValidException {
+        orderService.updateOrder(id,orderStatus);
+        return ResponseEntity.ok(new SuccessDetails<>("Order update  Successfully!", HttpStatus.OK.value(),true));
     }
 }

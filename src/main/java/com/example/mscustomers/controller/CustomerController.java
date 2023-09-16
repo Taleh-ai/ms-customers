@@ -2,9 +2,12 @@ package com.example.mscustomers.controller;
 
 import com.example.mscustomers.dto.request.CustomerRequestDto;
 import com.example.mscustomers.dto.response.CustomerResponseDto;
+import com.example.mscustomers.exception.handler.SuccessDetails;
 import com.example.mscustomers.service.CustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,17 +18,19 @@ public class CustomerController {
     private final CustomerService service;
 
     @GetMapping
-    public CustomerResponseDto getcustomer(){
-       return  service.getCustomerInfo();
+    public ResponseEntity<SuccessDetails<CustomerResponseDto>> getcustomer(){
+        return ResponseEntity.ok(new SuccessDetails<>(service.getCustomerInfo(), HttpStatus.OK.value(),true));
     }
 
     @DeleteMapping
-    public void deleteCustomer(){
+    public ResponseEntity<SuccessDetails<String>> deleteCustomer(){
           service.deleteUser();
+        return ResponseEntity.ok(new SuccessDetails<>("Customer deleted Successfully!", HttpStatus.OK.value(),true));
     }
 
     @PutMapping
-    public void updateUser(@RequestBody CustomerRequestDto customerRequestDto){
+    public ResponseEntity<SuccessDetails<String>> updateUser(@RequestBody CustomerRequestDto customerRequestDto){
         service.updateCustomerInfo(customerRequestDto);
+        return ResponseEntity.ok(new SuccessDetails<>("Customer infos updated Successfully!", HttpStatus.OK.value(),true));
     }
 }

@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/")
+@RequestMapping("v1/shipping")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "Bearer Authentication")
 public class ShippingAdressController {
     private final ShippingAdressServiceImpl shippingAdressService;
 
-    @PostMapping("shipping")
+    @PostMapping
     public ResponseEntity<SuccessDetails<String>> addAdress(@RequestBody ShippingAdressRequestDto shippingAdressRequestDto){
         shippingAdressService.addAdress(shippingAdressRequestDto);
         return ResponseEntity.ok(new SuccessDetails<>("Shipping address added Successfully!", HttpStatus.OK.value(),true));
     }
-    @PutMapping ("shipping")
+    @PutMapping
     public ResponseEntity<SuccessDetails<String>> updateAdress(@PathVariable Long id,@RequestBody ShippingAdressRequestDto shippingAdressRequestDto){
         shippingAdressService.updateAdress(id,shippingAdressRequestDto);
         return ResponseEntity.ok(new SuccessDetails<>("Shipping address updated Successfully!", HttpStatus.OK.value(),true));
     }
-    @GetMapping ("shipping")
+    @GetMapping
     public ResponseEntity<SuccessDetails<List<ShippingAdressResponseDto>>> getUserAdresses(){
         return ResponseEntity.ok(new SuccessDetails<>(shippingAdressService.getUserAdresses(), HttpStatus.OK.value(),true));
 
     }
 
-    @GetMapping ("shipping{id}")
+    @GetMapping ("{id}")
     public  ResponseEntity<SuccessDetails<ShippingAdressResponseDto>>  getUserAdress(@PathVariable Long id){
         return ResponseEntity.ok(new SuccessDetails<>(shippingAdressService.getUserAdress(id), HttpStatus.OK.value(),true));
     }
