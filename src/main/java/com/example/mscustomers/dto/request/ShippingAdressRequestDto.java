@@ -9,6 +9,5 @@ public class ShippingAdressRequestDto {
     private String city;
     private String street;
     private int homeNo;
-    private Long customerId;
     private String adressPurpose;
 }
