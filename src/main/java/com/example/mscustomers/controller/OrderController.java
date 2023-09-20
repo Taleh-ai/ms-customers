@@ -46,7 +46,7 @@ public class OrderController {
         return ResponseEntity.ok(new SuccessDetails<>(orderService.getOrderById(id), HttpStatus.OK.value(),true));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("dealer/{id}")
     public ResponseEntity<SuccessDetails<String>> updateOrder(@PathVariable(name = "id") Long id,@RequestParam OrderStatus orderStatus) throws ResourceNotFoundException, MethodArgumentNotValidException {
         orderService.updateOrder(id,orderStatus);
         return ResponseEntity.ok(new SuccessDetails<>("Order update  Successfully!", HttpStatus.OK.value(),true));

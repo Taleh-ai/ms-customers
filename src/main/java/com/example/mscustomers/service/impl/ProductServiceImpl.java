@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImp {
+public class ProductServiceImpl {
 
     private final ProductServiceClient productServiceClient;
 
