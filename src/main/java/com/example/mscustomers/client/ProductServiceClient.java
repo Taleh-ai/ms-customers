@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "msdealer", url = "http://localhost:8081")
+@FeignClient(name = "msdealer", url = "http://localhost:8081/v1/product-feign")
 public interface ProductServiceClient {
 
-    @GetMapping("/v1/product-feign/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<SuccessDetails<ProductResponseDto>> getProductById(@PathVariable("id") Long id);
 
-    @GetMapping("/v1/product-feign")
+    @GetMapping
     ResponseEntity<SuccessDetails<List<ProductResponseDto>>> getAllProducts();
 
-    @PutMapping("/v1/product-feign/{id}/stock")
+    @PutMapping("/stock/{id}")
     ResponseEntity<SuccessDetails<String>> updateProductStock(@PathVariable("id") Long id,
                                                               @RequestParam("quantity") int quantity);
 
-    @GetMapping("/v1/product-feign/{id}/price")
+    @GetMapping("/price/{id}")
     ResponseEntity<SuccessDetails<Double>> getProductPriceById(@PathVariable("id") Long id);
 }

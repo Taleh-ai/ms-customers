@@ -1,47 +1,48 @@
 package com.example.mscustomers.service.impl;
 
-import com.example.mscustomers.client.ProductServiceClient;
-import com.example.mscustomers.dto.response.ProductResponseDto;
-import com.example.mscustomers.exception.handler.SuccessDetails;
-import com.example.mscustomers.mapper.CartMapper;
-import com.example.mscustomers.dto.request.CartRequestDto;
-import com.example.mscustomers.dto.response.CartResponseDto;
-import com.example.mscustomers.entity.CartEntity;
-import com.example.mscustomers.entity.CustomerEntity;
-import com.example.mscustomers.exception.ResourceNotFoundException;
-import com.example.mscustomers.repository.CartRepository;
-import com.example.mscustomers.repository.CustomerRepository;
-import com.example.mscustomers.service.CartService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import com.example.mscustomers.dto.request.CartRequestDto;
+import com.example.mscustomers.dto.response.CartResponseDto;
+import com.example.mscustomers.dto.response.ProductResponseDto;
+import com.example.mscustomers.entity.CartEntity;
+import com.example.mscustomers.entity.CustomerEntity;
+import com.example.mscustomers.exception.ResourceNotFoundException;
+import com.example.mscustomers.mapper.CartMapper;
+import com.example.mscustomers.repository.CartRepository;
+import com.example.mscustomers.repository.CustomerRepository;
+import com.example.mscustomers.exception.handler.SuccessDetails;
+import com.example.mscustomers.service.CartService;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
+    private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
+
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
     private final CustomerRepository customerRepository;
-    private final ProductServiceClient productServiceClient;
+    private final ProductServiceImpl productService;
 
     @Override
     public void createCart(CartRequestDto cartRequestDto) throws ResourceNotFoundException {
-        ResponseEntity<SuccessDetails<ProductResponseDto>> productResponseDto = productServiceClient.getProductById(cartRequestDto.getProductId());
+        ProductResponseDto productResponseDto = productService.getProductById(cartRequestDto.getProductId());
 
-        if (productResponseDto.getStatusCode().is2xxSuccessful()) {
-            ProductResponseDto productDto = productResponseDto.getBody().getData();
-            if (!"No stock".equals(productDto.getStockSituation())) {
+        if (Objects.isNull(productResponseDto)) {
+            if (!"No stock".equals(productResponseDto.getStockSituation())) {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
+                CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail(userDetails.getUsername());
                 CartEntity cartEntity = cartMapper.fromDto(cartRequestDto);
                 cartEntity.setCustomerEntity(customerEntity);
                 cartRepository.save(cartEntity);
@@ -57,21 +58,21 @@ public class CartServiceImpl implements CartService {
     public List<CartResponseDto> viewAllCart() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail( userDetails.getUsername());
+        CustomerEntity customerEntity = customerRepository.findCustomerEntityByEmail(userDetails.getUsername());
+        logger.info(customerEntity.getEmail());
         List<CartEntity> cartEntities = cartRepository.getCartEntitiesByCustomerEntity(customerEntity);
         List<CartResponseDto> cartResponseDtoList = cartMapper.toDtoList(cartEntities);
 
         cartResponseDtoList.forEach(cartResponseDto -> {
-            ResponseEntity<SuccessDetails<ProductResponseDto>> productDtoResponse = productServiceClient.getProductById(cartResponseDto.getProductId());
+            logger.info(cartResponseDto.getProductId().toString());
+            ProductResponseDto productResponseDto = productService.getProductById(cartResponseDto.getProductId());
+            logger.info(productResponseDto.toString());
+            double productprice = productResponseDto.getAmount();
+            logger.info(String.valueOf(productprice));
 
-            if (productDtoResponse.getStatusCode().is2xxSuccessful()) {
-                ProductResponseDto productDto = productDtoResponse.getBody().getData();
-                double totalPrice = productDto.getPrice() * cartResponseDto.getProductQuantity();
+                double totalPrice =  productprice * cartResponseDto.getProductQuantity();
                 cartResponseDto.setTotalPrice(totalPrice);
-            } else {
-                // Handle the case where the Feign client call failed
-                // You can log an error message or handle it as needed
-            }
+
         });
 
         return cartResponseDtoList;

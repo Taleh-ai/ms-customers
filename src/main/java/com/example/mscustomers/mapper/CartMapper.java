@@ -26,6 +26,7 @@ public class CartMapper {
         CartResponseDto responseDto = new CartResponseDto();
         responseDto.setId(entity.getCartId());
         responseDto.setProductQuantity(entity.getProductQuantity());
+        responseDto.setProductId(entity.getProductId());
         return responseDto;
     }
 

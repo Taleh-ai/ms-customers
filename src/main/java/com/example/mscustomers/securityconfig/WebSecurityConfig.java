@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"/v3/api-docs/**",
 			"/swagger-ui/**",
 			"/v1/signup",
-			"/v1/signin"
+			"/v1/signin",
+			"/v1/orders-feign/**"
 	};
 
 	@Override
@@ -69,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				.authorizeRequests()
 				.antMatchers(AUTH_WHITELIST).permitAll()
-				.antMatchers("v1/orders/dealer/{id}").denyAll().anyRequest().authenticated().and().
+				.anyRequest().authenticated().and().
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

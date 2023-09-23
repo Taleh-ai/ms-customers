@@ -42,7 +42,7 @@ public class JwtAuthenticationController {
 
 	private final CustomerRepository customerRepo;
 	private final CustomerMapper mapper;
-	@RequestMapping(value = "v1//signin", method = RequestMethod.POST)
+	@RequestMapping(value = "v1/signin", method = RequestMethod.POST)
 	public String  signIn(@RequestBody JwtRequest request)
 			throws Exception {
 
@@ -68,7 +68,7 @@ public class JwtAuthenticationController {
 		if (entity == null) {
 			CustomerEntity userEntity = mapper.fromDto(dto);
 			customerRepo.save(userEntity);
-			mailService.mailSender(dto.getEmail());
+//			mailService.mailSender(dto.getEmail());
 			return ResponseEntity.ok("You signed!");
 
 		}else
